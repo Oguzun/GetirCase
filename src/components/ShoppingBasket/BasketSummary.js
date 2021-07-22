@@ -11,7 +11,7 @@ const BasketSummary = () => {
       <Box p={1}>
       <img src={Lock} alt="Lock" height="24" width="24" />
       </Box>
-      <Box p={1}>₺ {totalPrice.toFixed(2)}</Box>
+      <Box p={1}>₺  {Math.abs(totalPrice.toFixed(2))}</Box>
     </Box>
   );
 };
