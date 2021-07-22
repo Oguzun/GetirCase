@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -7,8 +7,10 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
+import Mug from "../../assets/Mug.png";
+import shirt from "../../assets/shirt.png";
 
 const useStyles = makeStyles({
   root: {
@@ -32,17 +34,36 @@ export default function ProductCard({ item }) {
     dispatch(shoppingActions.AddItem(item));
   };
 
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
+  const imgPath = (type) => {
+    if (type === "shirt") {
+      return (
+        <CardMedia
+          component="img"
+          alt="shirt"
+          height="120"
+          width="120"
+          image={shirt}
+          title="shirt"
+        />
+      );
+    } else {
+      return (
         <CardMedia
           component="img"
           alt="Mug"
           height="120"
           width="120"
-          image="https://www.redwolf.in/image/cache/catalog/mugs/rick-and-morty-evil-morty-mug-front-128x128.jpg"
+          image={Mug}
           title="Mug"
         />
+      );
+    }
+  };
+
+  return (
+    <Card className={classes.root}>
+      <CardActionArea>
+        {imgPath(item.itemType)}
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             ₺ {item.price}
@@ -59,7 +80,9 @@ export default function ProductCard({ item }) {
         <Button
           variant="contained"
           className={classes.display}
-          onClick={() => { handleClick(item) }}
+          onClick={() => {
+            handleClick(item);
+          }}
           size="small"
           color="secondary"
         >

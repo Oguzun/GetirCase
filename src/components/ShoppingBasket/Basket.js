@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import BasketItem from "./BasketItem";
 import {
   Box,
@@ -42,15 +42,12 @@ const Basket = () => {
             direction="column"
             justifyContent="center"
             alignItems="flex-start"
-            xs={12}
-            xl={12}
-            sm={12}
           >
             {addedItems.length > 0
               ? addedItems.map((item, i) => {
                   return (
                     <Fragment>
-                      <BasketItem key={i} item={item}></BasketItem>
+                      <BasketItem  item={item}></BasketItem>
                       <Divider style={{ width: "100%" }} />
                       <Box mb={2}></Box>
                     </Fragment>
@@ -61,12 +58,8 @@ const Basket = () => {
         </CardContent>
         <CardActions style={{ justifyContent: "flex-end" }}>
           <Box mb={1} border={2} p={1} borderColor="secondary.main">
-            <Typography
-              align="right"
-              variant="body1"
-              color="secondary"
-            >
-              ₺ {totalPrice.toFixed(2)}
+            <Typography align="right" variant="body1" color="secondary">
+              ₺ {Math.abs(totalPrice.toFixed(2))}
             </Typography>
           </Box>
         </CardActions>

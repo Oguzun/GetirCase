@@ -11,8 +11,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
-import CheckIcon from "@material-ui/icons/Check";
-
+ 
 export default function Sorter() {
   const [value, setValue] = useState("SortItemsAscendingByPrice");
   const dispatch = useDispatch();

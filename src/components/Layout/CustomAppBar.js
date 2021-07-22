@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Grid, Container, Box } from "@material-ui/core";
+import { AppBar, Toolbar, Grid, Container } from "@material-ui/core";
 import mainLogo from "../../assets/Logo.PNG";
 import BasketSummary from "../ShoppingBasket/BasketSummary";
 const useStyles = makeStyles((theme) => ({

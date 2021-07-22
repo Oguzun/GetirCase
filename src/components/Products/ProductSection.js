@@ -6,8 +6,7 @@ import { Box, Typography, Chip } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
-import { makeStyles } from "@material-ui/core/styles";
-
+ 
 
 const ProductSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,11 +14,10 @@ const ProductSection = () => {
   const indexofLastItem = currentPage * itemPerPage;
   const indexofFirstItem = indexofLastItem - itemPerPage;
   const items = useSelector((state) => state.Shopping.filteredItems);
-  const itemTypes = useSelector((state) => state.Shopping.itemTypes);
   const dispatch = useDispatch();
   const currentItems = items.slice(indexofFirstItem, indexofLastItem);
   const [mugClass,setMugClass]=useState("secondary");
-  const [shirtClass,setshirtClass]=useState("#FFFFFF");
+  const [shirtClass,setshirtClass]=useState("default");
   const paginate = (event, newPage) => {
     setCurrentPage(newPage);
   };
@@ -28,9 +26,9 @@ const ProductSection = () => {
     dispatch(shoppingActions.SetActiveChipFilter(payload));
     if(payload==="Mug"){
       setMugClass("secondary");
-      setshirtClass("#FFFFFF");
+      setshirtClass("default");
     }else{
-      setMugClass("#FFFFFF");
+      setMugClass("default");
       setshirtClass("secondary");
     }
   };

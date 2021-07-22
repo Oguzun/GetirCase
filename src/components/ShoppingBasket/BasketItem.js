@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import IconButton from "@material-ui/core/IconButton";
 import { Typography, Grid, Box } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -35,30 +35,27 @@ const BasketItem = ({ item }) => {
     >
       <Box mb={2}></Box>
 
-      <Grid item xl="6">
+      <Grid item xl={6}>
         <Grid
           container
           direction="column"
           justifyContent="center"
           alignItems="flex-start"
-          xs={12}
-          xl={12}
-          sm={12}
           spacing={1}
         >
-          <Grid item xl="12">
+          <Grid item xl={12}>
             <Typography variant="subtitle1" color="textPrimary" component="h2">
               {item.name}
             </Typography>
           </Grid>
-          <Grid item xl="12">
+          <Grid item xl={12}>
             <Typography variant="body2" color="textSecondary" component="h2">
-              ₺ {itemTotalPrice.toFixed(2)}
+              ₺ {Math.abs(itemTotalPrice.toFixed(2))}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xl="2">
+      <Grid item xl={2}>
         <IconButton
           color="secondary"
           aria-label="remove item"
@@ -68,7 +65,7 @@ const BasketItem = ({ item }) => {
           <RemoveIcon />
         </IconButton>
       </Grid>
-      <Grid item xl="2">
+      <Grid item xl={2}>
         <Box
           width={1}
           bgcolor="primary.main"
@@ -79,7 +76,7 @@ const BasketItem = ({ item }) => {
           <WhiteTextTypography variant="h5">{item.amount}</WhiteTextTypography>
         </Box>
       </Grid>
-      <Grid item xl="2">
+      <Grid item xl={2}>
         <IconButton
           color="secondary"
           aria-label="add item"

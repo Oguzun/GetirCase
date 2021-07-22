@@ -113,7 +113,7 @@ const shoppingSlice = createSlice({
     RemoveFilter(state, action) {
       state.filters = state.filters.filter((item) => {
         for (let key in action.payload) {
-          if (item[key] === undefined || item[key] != action.payload[key]) return true;
+          if (item[key] === undefined || item[key] !== action.payload[key]) return true;
         }
         return false;
       });

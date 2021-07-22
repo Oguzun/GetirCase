@@ -9,7 +9,6 @@ import Basket from "../ShoppingBasket/Basket";
 import Footer from "../Layout/Footer";
 
 export default function HomePage() {
-  const filteredItems = useSelector((state) => state.Shopping.filteredItems);
   const items = useSelector((state) => state.Shopping.items);
   const brands = useSelector((state) => state.Shopping.brands);
   const loading = useSelector((state) => state.Shopping.loading);
