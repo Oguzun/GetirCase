@@ -18,7 +18,7 @@ const Basket = () => {
     return (
       <Card
         variant="outlined"
-        style={{ borderColor: "#1EA4CE", borderWidth: "10px" }}
+        style={{ borderColor: "#1EA4CE", borderWidth: "6px" }}
       >
         <CardContent>
           <Typography align="center" variant="body1" color="primary">
@@ -34,7 +34,7 @@ const Basket = () => {
     return (
       <Card
         variant="outlined"
-        style={{ borderColor: "#1EA4CE", borderWidth: "8px" }}
+        style={{ borderColor: "#1EA4CE", borderWidth: "6px" }}
       >
         <CardContent>
           <Grid

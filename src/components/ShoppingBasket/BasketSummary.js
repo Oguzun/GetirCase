@@ -1,16 +1,17 @@
 import React from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { useSelector } from "react-redux";
+import Lock from "../../assets/Bag.png";
 
 const BasketSummary = () => {
   const totalPrice = useSelector((state) => state.Shopping.totalPrice);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2} bgcolor="primary.light">
+    <Box display="flex" justifyContent="center" p={2} bgcolor="primary.light">
       <Box p={1}>
-      <ShoppingBasketIcon  fontSize="small"/>  ₺ {totalPrice.toFixed(2)} 
+      <img src={Lock} alt="Lock" height="24" width="24" />
       </Box>
+      <Box p={1}>₺ {totalPrice.toFixed(2)}</Box>
     </Box>
   );
 };
