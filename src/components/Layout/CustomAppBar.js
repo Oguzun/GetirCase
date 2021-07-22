@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Grid, Container } from "@material-ui/core";
 import mainLogo from "../../assets/Logo.PNG";
 import BasketSummary from "../ShoppingBasket/BasketSummary";
+import Hidden from "@material-ui/core/Hidden";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -31,18 +33,23 @@ function CustomAppBar() {
               alignItems="center"
               spacing={0}
             >
-              <Grid item xs={12} sm={6} xl={3}></Grid>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                xl={4}
-                >
-                <img src={mainLogo} alt="Market" height="40" width="141" />
+              <Hidden only={["xs", "sm"]}>
+                <Grid item md={4}></Grid>
+              </Hidden>
+              <Grid item sm={1} md={4}>
+                <img
+                  edge="start"
+                  src={mainLogo}
+                  alt="Market"
+                  height="40"
+                  width="141"
+                />
               </Grid>
-              <Grid item xs={12} sm={6} xl={1}>
-                <BasketSummary />
-              </Grid>
+              <Hidden only={["xs", "sm"]}>
+                <Grid item md={4} lg={1}>
+                  <BasketSummary />
+                </Grid>
+              </Hidden>
             </Grid>
           </Container>
         </Toolbar>

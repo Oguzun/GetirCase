@@ -14,8 +14,8 @@ export default function Footer() {
         justifyContent="flex-start"
         alignItems="center"
       >
-        <Grid item xs={12} sm={4} xl={2}></Grid>
-        <Grid item xs={12} sm={4} xl={5}>
+        <Grid item xs={12} sm={4} lg={2}></Grid>
+        <Grid item xs={12} sm={4} lg={5}>
           <Typography
             align="right"
             variant="body1"
@@ -24,7 +24,7 @@ export default function Footer() {
            {text}
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={4} xl={5}></Grid>
+        <Grid item xs={12} sm={4} lg={5}></Grid>
       </Grid>
       <Box mb={5}></Box>
     </footer>

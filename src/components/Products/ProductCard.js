@@ -14,7 +14,7 @@ import shirt from "../../assets/shirt.png";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 245,
+    minHeight: 250,
   },
   display: {
     display: "flex",
@@ -24,6 +24,9 @@ const useStyles = makeStyles({
     minHeight: "22px",
     textTransform: "capitalize",
   },
+  content:{
+    minHeight: 65,
+  }
 });
 
 export default function ProductCard({ item }) {
@@ -64,16 +67,14 @@ export default function ProductCard({ item }) {
     <Card className={classes.root}>
       <CardActionArea>
         {imgPath(item.itemType)}
-        <CardContent>
+        <CardContent className={classes.content}>
           <Typography variant="body2" color="textSecondary" component="p">
             ₺ {item.price}
           </Typography>
           <Typography variant="subtitle1" color="textPrimary" component="p">
             {item.name}
           </Typography>
-          <Typography variant="subtitle1" color="textPrimary" component="p">
-            {item.itemType}
-          </Typography>
+       
         </CardContent>
       </CardActionArea>
       <CardActions disableSpacing={true}>

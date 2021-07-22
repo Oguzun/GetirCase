@@ -11,7 +11,8 @@ import {
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
- 
+import Hidden from "@material-ui/core/Hidden";
+
 export default function Sorter() {
   const [value, setValue] = useState("SortItemsAscendingByPrice");
   const dispatch = useDispatch();
@@ -22,9 +23,12 @@ export default function Sorter() {
 
   return (
     <Fragment>
+              <Hidden only={["sm", "xs"]}>
+
       <Typography variant="caption" align="left" display="block">
         Sorting
       </Typography>
+      </Hidden>
       <Box mb={1}></Box>
       <Paper variant="outlined">
         <Container>

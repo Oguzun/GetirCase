@@ -15,6 +15,7 @@ import {
 import { sc } from "../../utils/Common";
 import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
+import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,9 +60,12 @@ export default function FilterBar({ HeaderText, data }) {
 
   return (
     <Fragment>
+                    <Hidden only={["sm", "xs"]}>
+
       <Typography variant="caption" align="left" display="block">
         {HeaderText}
       </Typography>
+      </Hidden>
       <Box mb={1}></Box>
       <Paper variant="outlined">
         <Box mb={2}></Box>
