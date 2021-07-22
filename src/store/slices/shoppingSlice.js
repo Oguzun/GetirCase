@@ -30,16 +30,16 @@ const ItemTypeFilterFunction = (items, Filter) => {
 const SortHelper = (option, items) => {
   switch (option) {
     case "SortItemsAscendingByPrice": {
-      return SortItemsAscendingByPrice(items);
+      return items.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
     }
     case "SortItemsDescendingByPrice": {
-      return SortItemsDescendingByPrice(items);
+      return items.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
     }
     case "SortItemsDescendingByDate": {
-      return SortItemsDescendingByDate(items);
+      return items.sort((a, b) => parseFloat(a.added) - parseFloat(b.added));
     }
     case "SortItemsAscendingByDate": {
-      return SortItemsAscendingByDate(items);
+      return items.sort((a, b) => parseFloat(b.added) - parseFloat(a.added));
     }
     default: {
       console.log("Invalid choice");
@@ -48,17 +48,26 @@ const SortHelper = (option, items) => {
   }
 };
 
-const SortItemsAscendingByPrice = (items) => {
-  return items.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-};
-const SortItemsDescendingByPrice = (items) => {
-  return items.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-};
-const SortItemsAscendingByDate = (items) => {
-  return items.sort((a, b) => parseFloat(a.added) - parseFloat(b.added));
-};
-const SortItemsDescendingByDate = (items) => {
-  return items.sort((a, b) => parseFloat(b.added) - parseFloat(a.added));
+const FilterAll = (Filters, items, sortingOption) => {
+  if (Filters.length > 0) {
+    let NewItemList = [];
+    Filters.forEach((Filter) => {
+      if (Filter.Type === "Brand") {
+        NewItemList = NewItemList.concat(BrandFilterFunction(items, Filter));
+      } else if (Filter.Type === "Tag") {
+        NewItemList = NewItemList.concat(TagFilterFunction(items, Filter));
+      }
+    });
+    return SortHelper(
+      sortingOption,
+      NewItemList.filter(
+        (v, i, a) =>
+          a.findIndex((t) => t.Type === v.Type && t.index === v.index) === i
+      )
+    );
+  } else {
+    return items;
+  }
 };
 
 const shoppingSlice = createSlice({
@@ -87,74 +96,43 @@ const shoppingSlice = createSlice({
     },
     SetActiveChipFilter(state, action) {
       state.ActiveChipFilter = action.payload;
-      state.filteredItems = ItemTypeFilterFunction(state.filteredItems, action.payload);
+      state.filteredItems = FilterAll(
+        state.filters,
+        ItemTypeFilterFunction(state.items, action.payload),
+        state.sortingOption
+      );
     },
     AddFilter(state, action) {
       state.filters.push(action.payload);
-      let NewItemList = [];
-      state.filters.forEach((Filter) => {
-        if (Filter.Type === "Brand") {
-          NewItemList = NewItemList.concat(
-            BrandFilterFunction(state.items, Filter)
-          );
-        } else if (Filter.Type === "Tag") {
-          NewItemList = NewItemList.concat(
-            TagFilterFunction(state.items, Filter)
-          );
-        }
-      });
-      state.filteredItems = SortHelper(
-        state.sortingOption,
-        NewItemList.filter(
-          (v, i, a) =>
-            a.findIndex((t) => t.Type === v.Type && t.index === v.index) === i
-        )
-      );
-      state.filteredItems = ItemTypeFilterFunction(
-        state.filteredItems,
-        state.ActiveChipFilter
+      state.filteredItems = FilterAll(
+        state.filters,
+        ItemTypeFilterFunction(state.items, state.ActiveChipFilter),
+        state.sortingOption
       );
     },
     RemoveFilter(state, action) {
-      state.filters = state.filters.filter(
-        (item) =>
-          item.index !== action.payload.index &&
-          item.Type !== action.payload.Type
-      );
+      state.filters = state.filters.filter((item) => {
+        for (let key in action.payload) {
+          if (item[key] === undefined || item[key] != action.payload[key]) return true;
+        }
+        return false;
+      });
+
       if (state.filters.length === 0) {
-        state.filteredItems = state.items;
-      } else {
-        let NewItemList = [];
-        state.filters.forEach((Filter) => {
-          if (Filter.Type === "Brand") {
-            NewItemList = NewItemList.concat(
-              BrandFilterFunction(state.items, Filter)
-            );
-          } else if (Filter.Type === "Tag") {
-            NewItemList = NewItemList.concat(
-              TagFilterFunction(state.items, Filter)
-            );
-          }
-        });
-
-        state.filteredItems = SortHelper(
-          state.sortingOption,
-          NewItemList.filter(
-            (v, i, a) =>
-              a.findIndex((t) => t.Type === v.Type && t.index === v.index) === i
-          )
-        );
-
         state.filteredItems = ItemTypeFilterFunction(
-          state.filteredItems,
+          state.items,
           state.ActiveChipFilter
+        );
+      } else {
+        state.filteredItems = FilterAll(
+          state.filters,
+          ItemTypeFilterFunction(state.items, state.ActiveChipFilter),
+          state.sortingOption
         );
       }
     },
-
     AddItem(state, action) {
       state.totalPrice = state.totalPrice + action.payload.price;
-
       const existingBasketItemIndex = state.addedItems.findIndex(
         (item) => item.index === action.payload.index
       );
@@ -179,9 +157,7 @@ const shoppingSlice = createSlice({
       const existingBasketItemIndex = state.addedItems.findIndex(
         (item) => item.index === action.payload.index
       );
-
       const existingBasketItem = state.addedItems[existingBasketItemIndex];
-
       if (existingBasketItem) {
         const updatedItem = {
           ...existingBasketItem,
@@ -259,8 +235,15 @@ const shoppingSlice = createSlice({
         ...item,
         index: i,
       }));
-      state.filteredItems = SortItemsAscendingByPrice(state.items);
-      state.filteredItems = ItemTypeFilterFunction(state.items, state.ActiveChipFilter);
+
+      state.filteredItems = ItemTypeFilterFunction(
+        state.items,
+        state.ActiveChipFilter
+      );
+      state.filteredItems = SortHelper(
+        state.sortingOption,
+        state.filteredItems
+      );
 
       state.tags = action.payload
         .map((item) => item.tags)

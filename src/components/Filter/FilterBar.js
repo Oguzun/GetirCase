@@ -36,17 +36,13 @@ export default function FilterBar({ HeaderText, data }) {
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value.Id);
     const newChecked = [...checked];
-    const item = {
-      ...value,
-      index: value.Id,
-    };
 
     if (currentIndex === -1) {
       newChecked.push(value.Id);
-      dispatch(shoppingActions.AddFilter(item));
+      dispatch(shoppingActions.AddFilter(value));
     } else {
       newChecked.splice(currentIndex, 1);
-      dispatch(shoppingActions.RemoveFilter(item));
+      dispatch(shoppingActions.RemoveFilter(value));
     }
 
     if (newChecked.length > 0) {
@@ -57,8 +53,6 @@ export default function FilterBar({ HeaderText, data }) {
     } else {
       newChecked.push(0);
     }
-
-    console.log(newChecked);
 
     setChecked(newChecked);
   };

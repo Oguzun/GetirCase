@@ -6,6 +6,8 @@ import { Box, Typography, Chip } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
+import { makeStyles } from "@material-ui/core/styles";
+
 
 const ProductSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,16 +17,25 @@ const ProductSection = () => {
   const items = useSelector((state) => state.Shopping.filteredItems);
   const itemTypes = useSelector((state) => state.Shopping.itemTypes);
   const dispatch = useDispatch();
-
   const currentItems = items.slice(indexofFirstItem, indexofLastItem);
-
+  const [mugClass,setMugClass]=useState("secondary");
+  const [shirtClass,setshirtClass]=useState("#FFFFFF");
   const paginate = (event, newPage) => {
     setCurrentPage(newPage);
   };
 
   const handleChipClick = (payload) => {
     dispatch(shoppingActions.SetActiveChipFilter(payload));
+    if(payload==="Mug"){
+      setMugClass("secondary");
+      setshirtClass("#FFFFFF");
+    }else{
+      setMugClass("#FFFFFF");
+      setshirtClass("secondary");
+    }
   };
+
+ 
 
   return (
     <Grid
@@ -53,7 +64,7 @@ const ProductSection = () => {
               onClick={() => {
                 handleChipClick("Mug");
               }}
-              color="secondary"
+              color={mugClass}
             />
           </Grid>
           <Grid item xl={1}>
@@ -63,7 +74,7 @@ const ProductSection = () => {
               onClick={() => {
                 handleChipClick("Shirt");
               }}
-              color="#FFFFFF"
+              color={shirtClass}
             />
           </Grid>
         </Grid>
@@ -79,12 +90,27 @@ const ProductSection = () => {
           })
         : null}
       <Box mb={2}></Box>
+      <Grid item xs={12} sm={12} xl={12}>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-end"
+          >
+                      <Grid item xs={12} sm={12} xl={2}>
+                      </Grid>
 
-      <CustomPagination
-        itemsPerPage={itemPerPage}
-        totalItems={items.length}
-        paginate={paginate}
-      />
+          <Grid item xs={12} sm={12} xl={10}>
+            <CustomPagination
+              itemsPerPage={itemPerPage}
+              totalItems={items.length}
+              paginate={paginate}
+            />
+          </Grid>
+          
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
