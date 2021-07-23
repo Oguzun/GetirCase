@@ -2,12 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchCompanies = createAsyncThunk("/fetchCompanies", async () => {
-  const response = await axios.get("http://localhost:8000/companies");
+  const response = await axios.get("https://fakeservergetir.herokuapp.com/companies");
   return response.data;
 });
 
 export const fetchItems = createAsyncThunk("/fetchItems", async () => {
-  const response = await axios.get("http://localhost:8000/items");
+  const response = await axios.get("https://fakeservergetir.herokuapp.com/items");
   return response.data;
 });
 

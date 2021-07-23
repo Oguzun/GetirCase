@@ -46,8 +46,8 @@ const Basket = () => {
             {addedItems.length > 0
               ? addedItems.map((item, i) => {
                   return (
-                    <Fragment>
-                      <BasketItem  item={item}></BasketItem>
+                    <Fragment key={i} >
+                      <BasketItem item={item}></BasketItem>
                       <Divider style={{ width: "100%" }} />
                       <Box mb={2}></Box>
                     </Fragment>
