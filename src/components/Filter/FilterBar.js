@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState ,useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { sc } from "../../utils/Common";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
 import Hidden from "@material-ui/core/Hidden";
 
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 export default function FilterBar({ HeaderText, data }) {
   const classes = useStyles();
   const [checked, setChecked] = useState([0]);
+  const ActiveChipFilter = useSelector(
+    (state) => state.Shopping.ActiveChipFilter
+  );
 
   const [searchTerm, setsearchTerm] = useState("");
   const dispatch = useDispatch();
@@ -59,10 +62,12 @@ export default function FilterBar({ HeaderText, data }) {
       newChecked.push(0);
     }
 
-    console.log(newChecked);
-
     setChecked(newChecked);
   };
+
+  useEffect(() => {
+    setChecked([0]);
+  }, [ActiveChipFilter]);
 
   return (
     <Fragment>

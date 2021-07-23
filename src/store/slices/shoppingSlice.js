@@ -152,6 +152,7 @@ const shoppingSlice = createSlice({
       state.loading = true;
 
       state.ActiveChipFilter = action.payload;
+      state.filters=[];
       state.filteredItems = FilterAll(
         state.filters,
         ItemTypeFilterFunction(state.items, action.payload),
