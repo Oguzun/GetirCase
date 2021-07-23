@@ -72,7 +72,7 @@ const CreateTags = (items) => {
     },
   ].concat(tags);
 
-  return tags;
+  return tags.sort((a,b)=>   a.id - b.id );
 };
 
 const CreateBrands = (items, companies) => {
