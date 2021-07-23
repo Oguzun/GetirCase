@@ -36,7 +36,11 @@ export default function FilterBar({ HeaderText, data }) {
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value.Id);
-    const newChecked = [...checked];
+    let newChecked = [...checked];
+
+    if (value.Id === 0) {
+      newChecked = [0];
+    }
 
     if (currentIndex === -1) {
       newChecked.push(value.Id);
@@ -55,16 +59,17 @@ export default function FilterBar({ HeaderText, data }) {
       newChecked.push(0);
     }
 
+    console.log(newChecked);
+
     setChecked(newChecked);
   };
 
   return (
     <Fragment>
-                    <Hidden only={["sm", "xs"]}>
-
-      <Typography variant="caption" align="left" display="block">
-        {HeaderText}
-      </Typography>
+      <Hidden only={["sm", "xs"]}>
+        <Typography variant="caption" align="left" display="block">
+          {HeaderText}
+        </Typography>
       </Hidden>
       <Box mb={1}></Box>
       <Paper variant="outlined">

@@ -139,13 +139,18 @@ const shoppingSlice = createSlice({
   },
   reducers: {
     SetSortingOption(state, action) {
+      state.loading = true;
+
       state.sortingOption = action.payload;
       state.filteredItems = SortHelper(
         state.sortingOption,
         state.filteredItems
       );
+      state.loading = false;
     },
     SetActiveChipFilter(state, action) {
+      state.loading = true;
+
       state.ActiveChipFilter = action.payload;
       state.filteredItems = FilterAll(
         state.filters,
@@ -153,18 +158,36 @@ const shoppingSlice = createSlice({
         state.sortingOption
       );
 
-      state.tags = CreateTags(ItemTypeFilterFunction(state.items, action.payload));
-      state.brands = CreateBrands(ItemTypeFilterFunction(state.items, action.payload), state.companies);
+      state.tags = CreateTags(
+        ItemTypeFilterFunction(state.items, action.payload)
+      );
+      state.brands = CreateBrands(
+        ItemTypeFilterFunction(state.items, action.payload),
+        state.companies
+      );
+      state.loading = false;
     },
     AddFilter(state, action) {
-      state.filters.push(action.payload);
+      state.loading = true;
+
+      if (action.payload.Id === 0) {
+        state.filters = state.filters.filter(
+          (item) => item.Type !== action.payload.Type
+        );
+      } else {
+        state.filters.push(action.payload);
+      }
+
       state.filteredItems = FilterAll(
         state.filters,
         ItemTypeFilterFunction(state.items, state.ActiveChipFilter),
         state.sortingOption
       );
+      state.loading = false;
     },
     RemoveFilter(state, action) {
+      state.loading = false;
+
       state.filters = state.filters.filter((item) => {
         for (let key in action.payload) {
           if (item[key] === undefined || item[key] !== action.payload[key])
@@ -185,6 +208,7 @@ const shoppingSlice = createSlice({
           state.sortingOption
         );
       }
+      state.loading = false;
     },
     AddItem(state, action) {
       state.totalPrice = state.totalPrice + action.payload.price;
