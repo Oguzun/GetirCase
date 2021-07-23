@@ -48,6 +48,57 @@ const SortHelper = (option, items) => {
   }
 };
 
+const CreateTags = (items) => {
+  let tags = [];
+  tags = items
+    .map((item) => item.tags)
+    .reduce((prev, current) => [...prev, ...current]);
+
+  tags = [...new Set(tags)].map((tag, index) => ({
+    Id: index + 1,
+    Name: tag,
+    SearchVal: tag,
+    Type: "Tag",
+    Count: tags.filter((y) => y === tag).length,
+  }));
+
+  tags = [
+    {
+      Id: 0,
+      Name: "All",
+      Type: "Tag",
+      SearchVal: "All",
+      Count: items.length,
+    },
+  ].concat(tags);
+
+  return tags;
+};
+
+const CreateBrands = (items, companies) => {
+  let brands = [];
+
+  brands = companies.map((item, index) => ({
+    Id: index + 1,
+    Name: item.name,
+    SearchVal: item.slug,
+    Type: "Brand",
+    Count: items.filter((obj) => obj.manufacturer === item.slug).length,
+  }));
+
+  brands = [
+    {
+      Id: 0,
+      Name: "All",
+      Type: "Brand",
+      SearchVal: "All",
+      Count: items.length,
+    },
+  ].concat(brands);
+
+  return brands.sort((a, b) => a.Name.localeCompare(b.Name));
+};
+
 const FilterAll = (Filters, items, sortingOption) => {
   if (Filters.length > 0) {
     let NewItemList = [];
@@ -77,10 +128,10 @@ const shoppingSlice = createSlice({
     items: [],
     filters: [],
     filteredItems: [],
+    companies: [],
     tags: [],
     brands: [],
     addedItems: [],
-    itemTypes: [],
     sortingOption: "SortItemsAscendingByPrice",
     ActiveChipFilter: "Mug",
     totalPrice: 0,
@@ -101,6 +152,9 @@ const shoppingSlice = createSlice({
         ItemTypeFilterFunction(state.items, action.payload),
         state.sortingOption
       );
+
+      state.tags = CreateTags(ItemTypeFilterFunction(state.items, action.payload));
+      state.brands = CreateBrands(ItemTypeFilterFunction(state.items, action.payload), state.companies);
     },
     AddFilter(state, action) {
       state.filters.push(action.payload);
@@ -113,7 +167,8 @@ const shoppingSlice = createSlice({
     RemoveFilter(state, action) {
       state.filters = state.filters.filter((item) => {
         for (let key in action.payload) {
-          if (item[key] === undefined || item[key] !== action.payload[key]) return true;
+          if (item[key] === undefined || item[key] !== action.payload[key])
+            return true;
         }
         return false;
       });
@@ -199,27 +254,8 @@ const shoppingSlice = createSlice({
       state.error = action.payload;
     },
     [fetchCompanies.fulfilled]: (state, action) => {
-      state.brands = action.payload;
-
-      state.brands = state.brands.map((item, index) => ({
-        Id: index + 1,
-        Name: item.name,
-        SearchVal: item.slug,
-        Type: "Brand",
-        Count: state.items.filter((obj) => obj.manufacturer === item.slug)
-          .length,
-      }));
-
-      state.brands = [
-        {
-          Id: 0,
-          Name: "All",
-          Type: "Brand",
-          SearchVal: "All",
-          Count: state.items.length,
-        },
-      ].concat(state.brands);
-
+      state.companies = action.payload;
+      state.brands = CreateBrands(state.filteredItems, state.companies);
       state.loading = false;
     },
     [fetchItems.pending]: (state) => {
@@ -244,31 +280,7 @@ const shoppingSlice = createSlice({
         state.sortingOption,
         state.filteredItems
       );
-
-      state.tags = action.payload
-        .map((item) => item.tags)
-        .reduce((prev, current) => [...prev, ...current]);
-
-      state.tags = [...new Set(state.tags)].map((tag, index) => ({
-        Id: index + 1,
-        Name: tag,
-        SearchVal: tag,
-        Type: "Tag",
-        Count: state.tags.filter((y) => y === tag).length,
-      }));
-
-      state.tags = [
-        {
-          Id: 0,
-          Name: "All",
-          Type: "Tag",
-          SearchVal: "All",
-          Count: state.items.length,
-        },
-      ].concat(state.tags);
-
-      state.itemTypes = [...new Set(state.items.map((item) => item.itemType))];
-
+      state.tags = CreateTags(state.filteredItems);
       state.loading = false;
     },
   },
