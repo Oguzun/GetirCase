@@ -24,6 +24,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
   const [message, setMessage] = useState('');
   const filters = useSelector((state) => state.Shopping.filters);
   const sortingOption = useSelector((state) => state.Shopping.sortingOption);
+  
 
 
 
@@ -166,7 +167,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
           </Grid>
         </SwipeableDrawer>
       </Grid>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
         <Alert onClose={handleClose} severity="info">
           {message}
         </Alert>

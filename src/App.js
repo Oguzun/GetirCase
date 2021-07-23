@@ -1,15 +1,14 @@
-import React,{Fragment} from "react";
+import React  from "react";
 import HomePage from "./components/HomePage/HomePage";
 import CustomAppBar from "./components/Layout/CustomAppBar";
-
+import { Paper } from "@material-ui/core";
 
 function App() {
- 
   return (
-    <Fragment>
+    <Paper elevation={0}  style={{ background: "#FAFAFA" } }>
       <CustomAppBar></CustomAppBar>
       <HomePage></HomePage>
-    </Fragment>
+    </Paper>
   );
 }
 

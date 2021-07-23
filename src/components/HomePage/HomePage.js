@@ -100,7 +100,7 @@ export default function HomePage() {
                 onClose={() => {
                   setOpenDrawer(false);
                 }}
-                onOpen={() => {}}
+                 onOpen={() => {}}
               >
                 <Basket />
               </SwipeableDrawer>

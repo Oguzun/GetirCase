@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     maxWidth: "100%",
     maxHeight: "22px",
     minWidth: "100%",
-    minHeight: "22px",
+    minHeight: "35px",
     textTransform: "capitalize",
   },
   content:{
