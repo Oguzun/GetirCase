@@ -45,7 +45,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
         >
           <Box mb={2}></Box>
 
-          <Grid item  xs={12}  sm={12}>
+          <Grid item   xs={12} sm={12}>
             <CloseIcon
               style={{
                 cursor: "pointer",
@@ -58,7 +58,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
               }}
             />
           </Grid>
-          <Grid item  xs={12}  sm={12}>
+          <Grid item   xs={12} sm={12}>
             <Typography
               variant="body2"
               color="textSecondary"
@@ -71,6 +71,8 @@ const FilterBarMobile = ({ brands, items, tags }) => {
           </Grid>
 
           <Box mb={4}></Box>
+          <Grid item   xs={12} sm={12}>
+
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -80,14 +82,14 @@ const FilterBarMobile = ({ brands, items, tags }) => {
               <Typography>Sorting</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Grid item  xs={12}  sm={12}>
+              <Grid item xs={12} sm={12}>
                 <Sorter></Sorter>
               </Grid>
             </AccordionDetails>
           </Accordion>
-
+</Grid>
           <Box mb={4}></Box>
-          <Grid item sm={12}>
+          <Grid item   xs={12} sm={12}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -97,7 +99,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
                 <Typography>Brands</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid item   xs={12}  sm={12}>
+                <Grid item   xs={12} sm={12}>
                   <FilterBar
                     HeaderText="Brands"
                     data={brands}
@@ -108,7 +110,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
             </Accordion>
           </Grid>
           <Box mb={4}></Box>
-          <Grid item  xs={12}  sm={12}>
+          <Grid item   xs={12} sm={12}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -118,7 +120,7 @@ const FilterBarMobile = ({ brands, items, tags }) => {
                 <Typography>Tags</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Grid item  xs={12}  sm={12}>
+                <Grid item   xs={12} sm={12}>
                   <FilterBar
                     HeaderText="Tags"
                     data={tags}
@@ -133,6 +135,6 @@ const FilterBarMobile = ({ brands, items, tags }) => {
       </SwipeableDrawer>
     </Grid>
   );
-};
+}; 
 
 export default FilterBarMobile;
