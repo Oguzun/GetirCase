@@ -46,7 +46,7 @@ function CustomAppBar() {
                 />
               </Grid>
               <Hidden only={["xs", "sm"]}>
-                <Grid item md={4} lg={1}>
+                <Grid item md={2} lg={1} xl={1}>
                   <BasketSummary />
                 </Grid>
               </Hidden>

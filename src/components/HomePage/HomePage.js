@@ -9,10 +9,9 @@ import Basket from "../ShoppingBasket/Basket";
 import Footer from "../Layout/Footer";
 import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
-import ConcealableContainer from "../Layout/ConcealableContainer";
+import ConcealableContainer from "../ConcealableContainer";
 import { Button } from "@material-ui/core";
 import FilterBarMobile from "../Filter/FilterBarMobile";
- 
 
 const useStyles = makeStyles((theme) => ({
   Concealablebutton: {
@@ -28,7 +27,7 @@ export default function HomePage() {
   const tags = useSelector((state) => state.Shopping.tags);
   const totalPrice = useSelector((state) => state.Shopping.totalPrice);
   const [openDrawer, setOpenDrawer] = useState(false);
- 
+
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -70,8 +69,8 @@ export default function HomePage() {
           </Grid>
         </Hidden>
         <Grid item xs={12} sm={12} md={8} lg={5}>
-          <Hidden only={["md", "lg", "xl"]}>
-            <FilterBarMobile brands={brands} items={items} tags={tags}/>
+          <Hidden only={["lg", "xl"]}>
+            <FilterBarMobile brands={brands} items={items} tags={tags} />
           </Hidden>
           <ProductSection loading={loading} />
         </Grid>
@@ -100,7 +99,7 @@ export default function HomePage() {
                 onClose={() => {
                   setOpenDrawer(false);
                 }}
-                 onOpen={() => {}}
+                onOpen={() => {}}
               >
                 <Basket />
               </SwipeableDrawer>

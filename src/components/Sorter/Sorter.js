@@ -12,6 +12,12 @@ import {
 import { useDispatch } from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
 import Hidden from "@material-ui/core/Hidden";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+ 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function Sorter() {
   const [value, setValue] = useState("SortItemsAscendingByPrice");
@@ -19,15 +25,26 @@ export default function Sorter() {
   const handleChange = (event) => {
     setValue(event.target.value);
     dispatch(shoppingActions.SetSortingOption(event.target.value));
+    setOpen(true);
+    setMessage("Sorting automatically applied");
   };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   return (
     <Fragment>
-              <Hidden only={["sm", "xs"]}>
-
-      <Typography variant="caption" align="left" display="block">
-        Sorting
-      </Typography>
+      <Hidden only={["sm", "xs"]}>
+        <Typography variant="caption" align="left" display="block">
+          Sorting
+        </Typography>
       </Hidden>
       <Box mb={1}></Box>
       <Paper variant="outlined">
@@ -63,6 +80,13 @@ export default function Sorter() {
           </FormControl>
         </Container>
       </Paper>
+      <Hidden only={["lg", "xl"]}>
+        <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="info">
+            {message}
+          </Alert>
+        </Snackbar>
+      </Hidden>
     </Fragment>
   );
 }

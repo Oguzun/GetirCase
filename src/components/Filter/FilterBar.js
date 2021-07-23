@@ -16,6 +16,13 @@ import { sc } from "../../utils/Common";
 import { useDispatch ,useSelector} from "react-redux";
 import { shoppingActions } from "../../store/slices/shoppingSlice";
 import Hidden from "@material-ui/core/Hidden";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+ 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
 export default function FilterBar({ HeaderText, data }) {
   const classes = useStyles();
   const [checked, setChecked] = useState([0]);
+  
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const ActiveChipFilter = useSelector(
     (state) => state.Shopping.ActiveChipFilter
   );
@@ -63,11 +73,25 @@ export default function FilterBar({ HeaderText, data }) {
     }
 
     setChecked(newChecked);
+
+    setOpen(true);
+    setMessage("Filters automatically applied");
   };
 
   useEffect(() => {
     setChecked([0]);
   }, [ActiveChipFilter]);
+
+ 
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+ 
 
   return (
     <Fragment>
@@ -118,6 +142,13 @@ export default function FilterBar({ HeaderText, data }) {
           </List>
         </Container>
       </Paper>
+      <Hidden only={["lg", "xl"]}>
+        <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="info">
+            {message}
+          </Alert>
+        </Snackbar>
+      </Hidden>
     </Fragment>
   );
 }

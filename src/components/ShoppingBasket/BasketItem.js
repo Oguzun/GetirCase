@@ -30,32 +30,31 @@ const BasketItem = ({ item }) => {
     <Grid
       container
       direction="row"
-      justifyContent="flex-start"
+      justifyContent="space-between"
       alignItems="center"
     >
       <Box mb={2}></Box>
 
-      <Grid item lg={6}>
+      <Grid item xs={6}>
         <Grid
           container
           direction="column"
           justifyContent="center"
           alignItems="flex-start"
-          spacing={1}
         >
-          <Grid item lg={12}>
+          <Grid item xs={12}>
             <Typography variant="subtitle1" color="textPrimary" component="h2">
               {item.name}
             </Typography>
           </Grid>
-          <Grid item lg={12}>
+          <Grid item xs={12}>
             <Typography variant="body2" color="textSecondary" component="h2">
               ₺ {Math.abs(itemTotalPrice.toFixed(2))}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item lg={2}>
+      <Grid item xs={2}>
         <IconButton
           color="secondary"
           aria-label="remove item"
@@ -65,7 +64,7 @@ const BasketItem = ({ item }) => {
           <RemoveIcon />
         </IconButton>
       </Grid>
-      <Grid item lg={2}>
+      <Grid item xs={2}>
         <Box
           width={1}
           bgcolor="primary.main"
@@ -76,7 +75,7 @@ const BasketItem = ({ item }) => {
           <WhiteTextTypography variant="h5">{item.amount}</WhiteTextTypography>
         </Box>
       </Grid>
-      <Grid item lg={2}>
+      <Grid item xs={2}>
         <IconButton
           color="secondary"
           aria-label="add item"
