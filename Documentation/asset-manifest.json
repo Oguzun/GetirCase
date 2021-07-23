@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.js": "/build/main.38dbd7bc.js",
+    "runtime-main.js": "/build/bundle.b50e26a4.js",
+    "build/2.0ecca00f.js": "/build/2.0ecca00f.js",
+    "build/2.0ecca00f.js.LICENSE.txt": "/build/2.0ecca00f.js.LICENSE.txt",
+    "index.html": "/index.html",
+    "static/media/Logo.41cc4b27.PNG": "/static/media/Logo.41cc4b27.PNG",
+    "static/media/shirt.720ac7aa.png": "/static/media/shirt.720ac7aa.png"
+  },
+  "entrypoints": [
+    "build/bundle.b50e26a4.js",
+    "build/2.0ecca00f.js",
+    "build/main.38dbd7bc.js"
+  ]
+}
