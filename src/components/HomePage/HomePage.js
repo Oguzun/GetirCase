@@ -37,7 +37,7 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(fetchCompanies());
-  }, []);
+  }, [items]);
 
   return (
     <Container maxWidth="xl">
